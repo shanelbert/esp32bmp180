@@ -1,5 +1,6 @@
 const express = require('express')
 const path = require('path')
+const bodyParser = require('body-parser');
 
 const PORT = process.env.PORT || 5000
 
@@ -14,7 +15,7 @@ express()
   .get('/', (req, res) => res.sendFile(path.join(__dirname + '/pages/index.html'), {headers: {'Content-Type': 'text/html'}}))
   .get('/db', async (req, res) => {
     try {
-      const client = await pool.connect()
+      const client = await pool.connect();
       const result = await client.query('SELECT * FROM readings');
       const results = (result) ? result.rows : null;
       
@@ -49,9 +50,9 @@ express()
       res.send("Error " + err);
     }
   })
-  .post('/dbpost', (req, res) => {
+  .post('/dbpost', async (req, res) => {
     try {
-      const client = await pool.connect()
+      const client = await pool.connect();
       
       const nbelement = client.query('SELECT COUNT(*) FROM readings;')
 

@@ -10,13 +10,13 @@ const pool = new Pool({
 });
 
 express()
-  .get('/', (req, res) => res.sendFile(path.join(__dirname + '/pages/index.html')))
+  .get('/', (req, res) => res.sendFile(path.join(__dirname + '/pages/index')))
   .get('/db', async (req, res) => {
     try {
       const client = await pool.connect()
       const result = await client.query('SELECT * FROM readings');
       const results = { 'results': (result) ? result.rows : null};
-      res.render(__dirname + '/pages/db.html', results );
+      res.render(__dirname + '/pages/db', results );
       client.release();
     } catch (err) {
       console.error(err);

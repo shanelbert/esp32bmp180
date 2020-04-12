@@ -10,14 +10,39 @@ const pool = new Pool({
 });
 
 express()
-  .get('/', (req, res) => res.sendFile(path.join(__dirname + '/pages/index')))
+  .get('/', (req, res) => res.sendFile(path.join(__dirname + '/pages/index'), {headers: {'Content-Type': 'text/html'}}))
   .get('/db', async (req, res) => {
     try {
       const client = await pool.connect()
       const result = await client.query('SELECT * FROM readings');
-      const results = { 'results': (result) ? result.rows : null};
-      res.render(__dirname + '/pages/db', results );
-      client.release();
+      const results = (result) ? result.rows : null;
+      
+      var readings =``;
+      results.forEach(elm => {
+        readings +=  `<li>ID: ${elm.id} Name: ${elm.name}</li>`
+      });
+
+      var content = `
+      <!DOCTYPE html>
+      <html>
+      <head>
+      </head>
+      <body>
+
+      <div class="container">
+      <h2>Database Results</h2>
+      <ul>
+      ${readings}
+      </ul>
+      </div>
+
+      </body>
+      </html>
+      `;
+      
+    res.send(content);
+    client.release();
+
     } catch (err) {
       console.error(err);
       res.send("Error " + err);

@@ -10,7 +10,7 @@ const pool = new Pool({
 });
 
 express()
-  .get('/', (req, res) => res.sendFile(path.join(__dirname + '/pages/index'), {headers: {'Content-Type': 'text/html'}}))
+  .get('/', (req, res) => res.sendFile(path.join(__dirname + '/pages/index.html'), {headers: {'Content-Type': 'text/html'}}))
   .get('/db', async (req, res) => {
     try {
       const client = await pool.connect()
@@ -39,7 +39,7 @@ express()
       </body>
       </html>
       `;
-      
+
     res.send(content);
     client.release();
 

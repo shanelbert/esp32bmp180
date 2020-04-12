@@ -12,6 +12,10 @@ const pool = new Pool({
 
 express()
   .use(bodyParser.json())
+  .use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  })
   .get('/', (req, res) => res.sendFile(path.join(__dirname + '/pages/index.html'), {headers: {'Content-Type': 'text/html'}}))
   .get('/db', async (req, res) => {
     try {

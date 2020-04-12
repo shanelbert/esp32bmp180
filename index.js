@@ -21,7 +21,7 @@ express()
       
       var readings =``;
       results.forEach(elm => {
-        readings +=  `<li>ID: ${elm.id} Name: ${elm.name}</li>`
+        readings +=  `<li>ID: ${elm.id} Sensor: ${elm.name} Location:${elm.location} Temperature::${elm.temperature} Altitude::${elm.altitude} Pressure::${elm.pressure} Timestamp::${elm.tstamp}</li>`
       });
 
       var content = `

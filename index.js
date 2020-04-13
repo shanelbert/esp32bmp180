@@ -73,16 +73,16 @@ express()
       const client = await pool.connect();
       
       // var result = await client.query('SELECT COUNT(*) FROM readings;');
-      // var id = parseInt(result.rows[0].count) + 1;
 
       var sensor = req.body.sensor;
       var location = req.body.location;
       var temperature = req.body.temperature;
       var altitude = req.body.altitude;
       var pressure = req.body.pressure;
-      var timestamp = req.body.timestamp;
+      var timestamp = await client.query("select CURRENT_TIMESTAMP(0) AT TIME ZONE 'CXT';");
+      var ts = timestamp.rows[0].timezone;
 
-      client.query(`INSERT INTO readings (sensor,location,temperature,altitude,pressure,timestamp) VALUES ('${sensor}', '${location}', '${temperature}', '${altitude}', '${pressure}', '${timestamp}');`
+      client.query(`INSERT INTO readings (sensor,location,temperature,altitude,pressure,timestamp) VALUES ('${sensor}', '${location}', '${temperature}', '${altitude}', '${pressure}', '${ts}');`
       , (err, res) => {
         try {
           if (err) throw err;

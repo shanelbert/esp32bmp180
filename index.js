@@ -82,7 +82,7 @@ express()
       var pressure = req.body.pressure;
       var timestamp = req.body.timestamp;
 
-      client.query(`INSERT INTO readings VALUES ('${sensor}', '${location}', ${temperature}, ${altitude}, ${pressure}, '${timestamp}');`
+      client.query(`INSERT INTO readings VALUES ('${sensor}', '${location}', '${temperature}', '${altitude}', '${pressure}', '${timestamp}');`
       , (err, res) => {
         try {
           if (err) throw err;

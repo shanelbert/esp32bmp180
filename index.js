@@ -16,7 +16,7 @@ express()
   .get('/db', async (req, res) => {
     try {
       const client = await pool.connect();
-      const result = await client.query('SELECT id, sensor, location, temperature, altitude, pressure, tstamp::text FROM readings');
+      const result = await client.query('SELECT id, sensor, location, temperature, altitude, pressure, timestamp FROM readings');
       const results = result.rows;
       
       var readings =``;
@@ -30,7 +30,7 @@ express()
           <td>${elm.temperature}</td>
           <td>${elm.altitude}</td>
           <td>${elm.pressure}</td>
-          <td>${elm.tstamp}</td>
+          <td>${elm.timestamp}</td>
         </tr>`
       });
 
@@ -72,8 +72,9 @@ express()
     try {
       const client = await pool.connect();
       
-      var result = await client.query('SELECT COUNT(*) FROM readings;');
-      var id = parseInt(result.rows[0].count) + 1;
+      // var result = await client.query('SELECT COUNT(*) FROM readings;');
+      // var id = parseInt(result.rows[0].count) + 1;
+
       var sensor = req.body.sensor;
       var location = req.body.location;
       var temperature = req.body.temperature;
@@ -81,7 +82,7 @@ express()
       var pressure = req.body.pressure;
       var timestamp = req.body.timestamp;
 
-      client.query(`INSERT INTO readings VALUES (${id}, '${sensor}', '${location}', ${temperature}, ${altitude}, ${pressure}, '${timestamp}');`
+      client.query(`INSERT INTO readings VALUES ('${sensor}', '${location}', ${temperature}, ${altitude}, ${pressure}, '${timestamp}');`
       , (err, res) => {
         try {
           if (err) throw err;

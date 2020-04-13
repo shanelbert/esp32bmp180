@@ -72,6 +72,13 @@ express()
         } catch {
           console.error("Can't store the data");
           console.log(req.body);
+          console.log(sensor);
+          console.log(location);
+          console.log(temperature);
+          console.log(altitude);
+          console.log(pressure);
+          console.log(timestamp);
+
         }
       });
       res.sendStatus(200);

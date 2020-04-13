@@ -16,28 +16,45 @@ express()
   .get('/db', async (req, res) => {
     try {
       const client = await pool.connect();
-      const result = await client.query('SELECT * FROM readings');
-      const results = (result) ? result.rows : null;
+      const result = await client.query('SELECT id, sensor, location, temperature, altitude, pressure, tstamp::date as date, tstamp::time as time FROM readings');
+      const results = result.rows;
       
       var readings =``;
       results.forEach(elm => {
-        readings +=  `<li>ID: ${elm.id} Sensor: ${elm.sensor} Location:${elm.location} Temperature:${elm.temperature} Altitude:${elm.altitude} Pressure:${elm.pressure} Timestamp::${elm.tstamp}</li>`
+        var timestamp = elm.date +" "+elm.time;
+        readings +=  `
+        <tr>
+          <td>${elm.id}</td>
+          <td>${elm.sensor}</td>
+          <td>${elm.location}</td>
+          <td>${elm.temperature}</td>
+          <td>${elm.altitude}</td>
+          <td>${elm.pressure}</td>
+          <td>${timestamp}</td>
+        </tr>`
       });
 
       var content = `
       <!DOCTYPE html>
       <html>
-      <head>
-      </head>
+        <head>
+        </head>
       <body>
-
-      <div class="container">
-      <h2>Database Results</h2>
-      <ul>
-      ${readings}
-      </ul>
-      </div>
-
+        <div class="container">
+          <h2>Database Results</h2>
+          <table style="width:100%">
+            <tr>
+              <th>ID</th>
+              <th>Sensor</th>
+              <th>Location</th>
+              <th>Temperature</th>
+              <th>Altitude</th>
+              <th>Pressure</th>
+              <th>Timestamp</th>
+            </tr>
+            ${readings}
+          </table>
+        </div>
       </body>
       </html>
       `;
@@ -64,23 +81,12 @@ express()
       var pressure = req.body.pressure;
       var timestamp = req.body.timestamp;
 
-      // client.query(`INSERT INTO readings VALUES (${nbelement+1}, '${req.body.sensor}', '${req.body.location}', ${parseFloat(req.body.temperature)}, ${parseFloat(req.body.altitude)}, ${parseFloat(req.body.pressure)}, '${req.body.timestamp}');`
       client.query(`INSERT INTO readings VALUES (${id}, '${sensor}', '${location}', ${temperature}, ${altitude}, ${pressure}, '${timestamp}');`
-      // client.query(`INSERT INTO readings VALUES (1, 'BMP180', 'Bandung', 202.1, 50.2, 101.1, '2020-01-01 10:01:01');`
       , (err, res) => {
         try {
           if (err) throw err;
         } catch {
           console.error("Can't store the data");
-          console.log(result);
-          // console.log(req.body);
-          // console.log(sensor);
-          // console.log(location);
-          // console.log(temperature);
-          // console.log(altitude);
-          // console.log(pressure);
-          // console.log(timestamp);
-
         }
       });
       res.sendStatus(200);

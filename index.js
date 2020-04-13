@@ -64,6 +64,7 @@ express()
           if (err) throw err;
         } catch {
           console.error("Can't store the data");
+          console.log(req.body);
         }
       });
       res.sendStatus(200);

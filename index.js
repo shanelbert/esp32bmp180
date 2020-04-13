@@ -72,7 +72,7 @@ express()
           if (err) throw err;
         } catch {
           console.error("Can't store the data");
-          console.log(id);
+          console.log(nbelement);
           // console.log(req.body);
           // console.log(sensor);
           // console.log(location);

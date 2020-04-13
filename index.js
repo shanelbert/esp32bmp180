@@ -80,7 +80,7 @@ express()
       var altitude = req.body.altitude;
       var pressure = req.body.pressure;
       var timestamp = await client.query("SELECT CURRENT_TIMESTAMP(0) AT TIME ZONE 'CXT'::text;");
-      var ts = timestamp.rows[0].timezone;
+      var ts = timestamp.rows[0].timestamp;
 
       client.query(`INSERT INTO readings (sensor,location,temperature,altitude,pressure,timestamp) VALUES ('${sensor}', '${location}', '${temperature}', '${altitude}', '${pressure}', '${ts}');`
       , (err, res) => {

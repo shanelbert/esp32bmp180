@@ -16,9 +16,12 @@ express()
     // Display all the database content in web page
     try {
       const client = await pool.connect();
+
+      // Get all data from the database
       const result = await client.query('SELECT id, sensor, location, temperature, altitude, pressure, timestamp FROM readings');
       const results = result.rows;
       
+      // Make the web page using the data
       var readings =``;
       results.forEach(elm => {
         readings +=  `
@@ -58,9 +61,8 @@ express()
       </html>
       `;
 
-    res.send(content);
-    client.release();
-
+      res.send(content);
+      client.release();
     } catch (err) {
       console.error(err);
       res.status(500).send("Error " + err);
@@ -77,6 +79,7 @@ express()
       var temperature = req.body.temperature;
       var altitude = req.body.altitude;
       var pressure = req.body.pressure;
+      
       var timestamp = await client.query("SELECT (CURRENT_TIMESTAMP(0) AT TIME ZONE 'CXT')::text;");
       var ts = timestamp.rows[0].timezone;
 
@@ -85,7 +88,7 @@ express()
         try {
           if (err) throw err;
         } catch {
-          console.error("Can't store the data");
+          console.error("Can't insert the data to database");
         }
       });
       res.sendStatus(200);

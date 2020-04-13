@@ -55,10 +55,17 @@ express()
     try {
       const client = await pool.connect();
       
-      const nbelement = client.query('SELECT COUNT(*) FROM readings;')
+      var nbelement = client.query('SELECT COUNT(*) FROM readings;');
+      var id = nbelement + 1;
+      var sensor = req.body.sensor;
+      var location = req.body.location;
+      var temperature = req.body.temperature;
+      var altitude = req.body.altitude;
+      var pressure = req.body.pressure;
+      var timestamp = req.body.timestamp;
 
       // client.query(`INSERT INTO readings VALUES (${nbelement+1}, '${req.body.sensor}', '${req.body.location}', ${parseFloat(req.body.temperature)}, ${parseFloat(req.body.altitude)}, ${parseFloat(req.body.pressure)}, '${req.body.timestamp}');`
-      client.query(`INSERT INTO readings VALUES (${nbelement+1}, '${req.body.sensor}', '${req.body.location}', ${req.body.temperature}, ${req.body.altitude}, ${req.body.pressure}, '${req.body.timestamp}');`
+      client.query(`INSERT INTO readings VALUES (${nbelement+1}, '${sensor}', '${location}', ${temperature}, ${altitude}, ${pressure}, '${timestamp}');`
       , (err, res) => {
         try {
           if (err) throw err;

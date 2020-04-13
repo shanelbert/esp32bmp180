@@ -55,8 +55,8 @@ express()
     try {
       const client = await pool.connect();
       
-      var nbelement = client.query('SELECT COUNT(*) FROM readings;');
-      var id = nbelement[0] + 1;
+      var result = await client.query('SELECT COUNT(*) FROM readings;');
+      var id = result.rows[0] + 1;
       var sensor = req.body.sensor;
       var location = req.body.location;
       var temperature = req.body.temperature;
@@ -72,7 +72,7 @@ express()
           if (err) throw err;
         } catch {
           console.error("Can't store the data");
-          console.log(nbelement);
+          console.log(result);
           // console.log(req.body);
           // console.log(sensor);
           // console.log(location);

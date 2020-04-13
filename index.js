@@ -42,7 +42,7 @@ express()
       <body>
         <div class="container">
           <h2>Database Results</h2>
-          <table style="width:100%">
+          <table cellspacing="5" cellpadding="5">
             <tr>
               <th>ID</th>
               <th>Sensor</th>

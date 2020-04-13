@@ -56,7 +56,7 @@ express()
       const client = await pool.connect();
       
       var result = await client.query('SELECT COUNT(*) FROM readings;');
-      var id = result.rows[0] + 1;
+      var id = parseInt(result.rows[0].count) + 1;
       var sensor = req.body.sensor;
       var location = req.body.location;
       var temperature = req.body.temperature;

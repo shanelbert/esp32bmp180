@@ -47,7 +47,8 @@ express()
 
     } catch (err) {
       console.error(err);
-      res.send("Error " + err);
+      res.status(500).send("Error " + err);
+      client.release();
     }
   })
   .post('/dbpost', async (req, res) => {
@@ -61,8 +62,8 @@ express()
       client.release();
     } catch (err) {
       console.error(err);
-      res.send("Error " + err);
+      res.status(500).send("Error " + err);
+      client.release();
     }
   })
-  .catch(() => res.sendStatus(500))
   .listen(PORT, () => console.log(`Listening on ${ PORT }`));

@@ -47,9 +47,9 @@ express()
               <th>ID</th>
               <th>Sensor</th>
               <th>Location</th>
-              <th>Temperature</th>
-              <th>Altitude</th>
-              <th>Pressure</th>
+              <th>Temperature (°C)</th>
+              <th>Altitude (m)</th>
+              <th>Pressure (Pa)</th>
               <th>Timestamp</th>
             </tr>
             ${readings}

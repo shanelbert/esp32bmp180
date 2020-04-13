@@ -64,4 +64,5 @@ express()
       res.send("Error " + err);
     }
   })
+  .catch(() => res.sendStatus(500))
   .listen(PORT, () => console.log(`Listening on ${ PORT }`));

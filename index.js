@@ -12,8 +12,8 @@ const pool = new Pool({
 
 express()
   .use(bodyParser.json())
-  .get('/', (req, res) => res.sendFile(path.join(__dirname + '/pages/index.html')))
-  .get('/db', async (req, res) => {
+  .get('/', async (req, res) => {
+    // Display all the database content in web page
     try {
       const client = await pool.connect();
       const result = await client.query('SELECT id, sensor, location, temperature, altitude, pressure, timestamp FROM readings');
@@ -21,7 +21,6 @@ express()
       
       var readings =``;
       results.forEach(elm => {
-        // var timestamp = elm.date +" "+elm.time;
         readings +=  `
         <tr>
           <td>${elm.id}</td>
@@ -69,10 +68,9 @@ express()
     }
   })
   .post('/dbpost', async (req, res) => {
+    // Receive incoming requests from the ESP32 and insert the data into a PostgreSQL database
     try {
       const client = await pool.connect();
-      
-      // var result = await client.query('SELECT COUNT(*) FROM readings;');
 
       var sensor = req.body.sensor;
       var location = req.body.location;

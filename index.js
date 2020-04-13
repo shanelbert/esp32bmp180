@@ -58,7 +58,13 @@ express()
       const nbelement = client.query('SELECT COUNT(*) FROM readings;')
 
       // client.query(`INSERT INTO readings VALUES (${nbelement+1}, ${req.body.sensor}, ${req.body.location}, ${parseFloat(req.body.temperature)}, ${parseFloat(req.body.altitude)}, ${parseFloat(req.body.pressure)}, ${req.body.timestamp});`)
-      client.query(`INSERT INTO readings VALUES (${nbelement+1}, "BMP180", "Jakarta", 205.3, 101.1, 101.5, "2020-10-03 10:00:00");`)
+      client.query(`INSERT INTO readings VALUES (${nbelement+1}, "BMP180", "Jakarta", 205.3, 101.1, 101.5, "2020-10-03 10:00:00");`, (err, res) => {
+        try {
+          if (err) throw err;
+        } catch {
+          console.error("Can't store the data");
+        }
+      });
       res.sendStatus(200);
       client.release();
     } catch (err) {

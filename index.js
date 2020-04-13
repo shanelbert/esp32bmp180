@@ -16,12 +16,12 @@ express()
   .get('/db', async (req, res) => {
     try {
       const client = await pool.connect();
-      const result = await client.query('SELECT id, sensor, location, temperature, altitude, pressure, tstamp::date as date, tstamp::time as time FROM readings');
+      const result = await client.query('SELECT id, sensor, location, temperature, altitude, pressure, tstamp::text FROM readings');
       const results = result.rows;
       
       var readings =``;
       results.forEach(elm => {
-        var timestamp = elm.date +" "+elm.time;
+        // var timestamp = elm.date +" "+elm.time;
         readings +=  `
         <tr>
           <td>${elm.id}</td>
@@ -30,7 +30,7 @@ express()
           <td>${elm.temperature}</td>
           <td>${elm.altitude}</td>
           <td>${elm.pressure}</td>
-          <td>${timestamp}</td>
+          <td>${elm.tstamp}</td>
         </tr>`
       });
 

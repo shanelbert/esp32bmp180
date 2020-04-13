@@ -65,8 +65,8 @@ express()
       var timestamp = req.body.timestamp;
 
       // client.query(`INSERT INTO readings VALUES (${nbelement+1}, '${req.body.sensor}', '${req.body.location}', ${parseFloat(req.body.temperature)}, ${parseFloat(req.body.altitude)}, ${parseFloat(req.body.pressure)}, '${req.body.timestamp}');`
-      // client.query(`INSERT INTO readings VALUES (${nbelement+1}, '${sensor}', '${location}', ${temperature}, ${altitude}, ${pressure}, '${timestamp}');`
-      client.query(`INSERT INTO readings VALUES (1, 'BMP180', 'Bandung', 202.1, 50.2, 101.1, '2020-01-01 10:01:01');`
+      client.query(`INSERT INTO readings VALUES (${id}, '${sensor}', '${location}', ${temperature}, ${altitude}, ${pressure}, '${timestamp}');`
+      // client.query(`INSERT INTO readings VALUES (1, 'BMP180', 'Bandung', 202.1, 50.2, 101.1, '2020-01-01 10:01:01');`
       , (err, res) => {
         try {
           if (err) throw err;

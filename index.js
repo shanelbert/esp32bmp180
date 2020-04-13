@@ -57,7 +57,8 @@ express()
       
       const nbelement = client.query('SELECT COUNT(*) FROM readings;')
 
-      client.query(`INSERT INTO readings VALUES (${nbelement+1}, '${req.body.sensor}', '${req.body.location}', ${parseFloat(req.body.temperature)}, ${parseFloat(req.body.altitude)}, ${parseFloat(req.body.pressure)}, '${req.body.timestamp}');`
+      // client.query(`INSERT INTO readings VALUES (${nbelement+1}, '${req.body.sensor}', '${req.body.location}', ${parseFloat(req.body.temperature)}, ${parseFloat(req.body.altitude)}, ${parseFloat(req.body.pressure)}, '${req.body.timestamp}');`
+      client.query(`INSERT INTO readings VALUES (${nbelement+1}, '${req.body.sensor}', '${req.body.location}', ${req.body.temperature}, ${req.body.altitude}, ${req.body.pressure}, '${req.body.timestamp}');`
       , (err, res) => {
         try {
           if (err) throw err;
